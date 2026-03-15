@@ -24,7 +24,6 @@ return (
   <>
     {" "}
     <nav className="fixed top-0 left-0 w-full z-50 px-6 py-0 flex justify-between items-center bg-black/10 backdrop-blur-md border-b border-white/10 text-white">
-      ```
       <Link href="/" className="hover:opacity-80 transition-opacity">
         <Image
           src={logo}
