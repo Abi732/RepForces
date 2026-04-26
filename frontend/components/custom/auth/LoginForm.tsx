@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2, Mail, Lock } from "lucide-react";
 
-const inputStyles = "w-full bg-zinc-800/50 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all";
+const inputStyles =
+  "w-full bg-zinc-800/50 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -22,13 +23,22 @@ export default function LoginForm() {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) throw new Error("Login failed");
-
       const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.detail || "Login failed");
+        return;
+      }
+
+      // ✅ Store token
       localStorage.setItem("token", data.access_token);
-      window.location.reload();
+
+      console.log("Login successful, redirecting...");
+
+      // ✅ Redirect to dashboard
+      window.location.href = "/dashboard";
     } catch (error) {
-      console.error(error);
+      console.error("ERROR:", error);
       alert("Invalid credentials. Please try again.");
     } finally {
       setIsLoading(false);
